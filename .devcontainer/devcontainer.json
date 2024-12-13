@@ -21,10 +21,18 @@
         }
     },
     
-    "postCreateCommand": [
-        "bash",
+    "initializeCommand": "mkdir -p /workspace/venv",
+    
+    "updateContentCommand": [
+        "/bin/sh",
         "-c",
-        "apt update && DEBIAN_FRONTEND=noninteractive apt install -y python3 python3-pip python3-venv && python3 -m venv /workspace/venv && . /workspace/venv/bin/activate && pip install -r requirements.txt"
+        "apt update && DEBIAN_FRONTEND=noninteractive apt install -y bash python3 python3-pip python3-venv"
+    ],
+    
+    "postCreateCommand": [
+        "/bin/sh",
+        "-c",
+        "python3 -m venv /workspace/venv && . /workspace/venv/bin/activate && pip install -r requirements.txt"
     ],
 
     "remoteEnv": {
