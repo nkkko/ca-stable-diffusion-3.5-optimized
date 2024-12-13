@@ -1,7 +1,14 @@
 from diffusers import BitsAndBytesConfig, SD3Transformer2DModel, StableDiffusion3Pipeline
 import torch
+from dotenv import load_dotenv
+import os
 
-model_id = "stabilityai/stable-diffusion-3.5-medium"
+# Load environment variables
+load_dotenv()
+
+# Get variables from .env
+model_id = os.getenv('MODEL_ID')
+hf_token = os.getenv('HF_TOKEN')
 
 # Configure 4-bit quantization
 nf4_config = BitsAndBytesConfig(
@@ -16,7 +23,7 @@ model_nf4 = SD3Transformer2DModel.from_pretrained(
     subfolder="transformer",
     quantization_config=nf4_config,
     torch_dtype=torch.float16,
-    token="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"
+    token=hf_token
 )
 
 # Create pipeline with quantized model
@@ -24,7 +31,7 @@ pipeline = StableDiffusion3Pipeline.from_pretrained(
     model_id, 
     transformer=model_nf4,
     torch_dtype=torch.float16,
-    token="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"
+    token=hf_token
 )
 
 # Enable CPU offloading to further reduce VRAM usage
