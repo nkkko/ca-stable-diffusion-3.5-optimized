@@ -11,6 +11,11 @@ This repository contains an optimized implementation of Stable Diffusion 3.5 usi
 
 ## Usage
 
+If you do not have devcontainer.json support on your system you can manually install requirements:
+```bash
+pip install -r requirements.txt 
+```
+
 ```bash
 python main.py
 ```
