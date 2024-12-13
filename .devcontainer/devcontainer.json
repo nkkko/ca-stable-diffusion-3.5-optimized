@@ -8,7 +8,7 @@
     ],
 
     "hostRequirements": {
-        "gpu": "optional"
+        "gpu": "true"
     },
 
     "customizations": {
@@ -20,23 +20,11 @@
             ]
         }
     },
-
-    "initializeCommand": "mkdir -p ${localWorkspaceFolder}/.docker-cache",
-
-    "mounts": [
-        "source=${localWorkspaceFolder}/.docker-cache,target=/root/.cache,type=bind"
-    ],
-
-    "onCreateCommand": [
-        "apt-get update",
-        "DEBIAN_FRONTEND=noninteractive apt-get install -y python3-pip python3-venv git wget build-essential",
-        "rm -rf /var/lib/apt/lists/*"
-    ],
     
     "postCreateCommand": [
         "python3 -m venv /workspace/venv",
         ". /workspace/venv/bin/activate",
-        "pip install --no-cache-dir -r requirements.txt"
+        "pip install -r requirements.txt"
     ],
 
     "remoteEnv": {
