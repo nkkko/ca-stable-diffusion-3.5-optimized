@@ -1,6 +1,6 @@
 {
     "name": "SD35-m Environment",
-    "image": "nvidia/cuda:12.6.3-cudnn-devel-ubuntu24.04",
+    "image": "pytorch/pytorch:2.5.1-cuda12.4-cudnn9-devel",
     
     "runArgs": [
         "--gpus",
@@ -21,18 +21,10 @@
         }
     },
     
-    "initializeCommand": "mkdir -p /workspace/venv",
-    
-    "updateContentCommand": [
-        "/bin/sh",
-        "-c",
-        "apt update && DEBIAN_FRONTEND=noninteractive apt install -y bash python3 python3-pip python3-venv"
-    ],
-    
     "postCreateCommand": [
-        "/bin/sh",
+        "/bin/bash",
         "-c",
-        "python3 -m venv /workspace/venv && . /workspace/venv/bin/activate && pip install -r requirements.txt"
+        "conda init bash && python -m venv /workspace/venv && source /workspace/venv/bin/activate && pip install -r requirements.txt"
     ],
 
     "remoteEnv": {
@@ -43,5 +35,8 @@
         "PATH": "/workspace/venv/bin:/usr/local/nvidia/bin:/usr/local/cuda/bin:${PATH}",
         "VIRTUAL_ENV": "/workspace/venv",
         "PYTHONPATH": "/workspace"
-    }
+    },
+
+    "workspaceMount": "source=${localWorkspaceFolder},target=/workspace,type=bind",
+    "workspaceFolder": "/workspace"
 }
