@@ -1,6 +1,4 @@
 {
-  "name": "SD35",
-  "postCreateCommand": [
-    "pip install -U diffusers torch transformers accelerate protobuf sentencepiece bitsandbytes"
-  ]
+  "name": "SD35-m Environment",
+  "postCreateCommand": "pip install -U diffusers torch transformers accelerate protobuf sentencepiece bitsandbytes"
 }
