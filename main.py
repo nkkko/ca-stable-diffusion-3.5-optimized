@@ -39,4 +39,4 @@ image = pipeline(
     num_inference_steps=40,
     guidance_scale=4.5,
 ).images[0]
-image.save("bruno.png")
+image.save("image.png")
