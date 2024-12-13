@@ -1,6 +1,6 @@
 {
     "name": "SD35-m Environment",
-    "image": "nvidia/cuda:12.6.3-cudnn-runtime-ubuntu24.04",
+    "image": "nvidia/cuda:12.6.3-cudnn-devel-ubuntu24.04",
     
     "runArgs": [
         "--gpus",
@@ -27,7 +27,11 @@
         "source=${localWorkspaceFolder}/.docker-cache,target=/root/.cache,type=bind"
     ],
 
-    "onCreateCommand": "apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y python3-pip python3-venv git wget build-essential && rm -rf /var/lib/apt/lists/*",
+    "onCreateCommand": [
+        "apt-get update",
+        "DEBIAN_FRONTEND=noninteractive apt-get install -y python3-pip python3-venv git wget build-essential",
+        "rm -rf /var/lib/apt/lists/*"
+    ],
     
     "postCreateCommand": [
         "python3 -m venv /workspace/venv",
