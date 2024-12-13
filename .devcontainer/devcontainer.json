@@ -1,43 +1,43 @@
 {
-  "name": "SD35-m Environment",
-  "image": "nvidia/cuda:12.6.3-cudnn-devel-ubi8",
-  
-  "features": {
-      "ghcr.io/devcontainers/features/nvidia-cuda:1": {
-          "installCudnn": true,
-          "installCudnnDev": true,
-          "installToolkit": true,
-          "cudaVersion": "12.6",
-          "cudnnVersion": "9.5.1.17"
-      }
-  },
+    "name": "SD35-m Environment",
+    "image": "nvidia/cuda:12.6.3-cudnn-devel-ubi8",
+    
+    "runArgs": [
+        "--gpus",
+        "all"
+    ],
 
-  "runArgs": [
-      "--gpus",
-      "all"
-  ],
+    "hostRequirements": {
+        "gpu": "optional"
+    },
 
-  "hostRequirements": {
-      "gpu": "optional"
-  },
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "ms-python.python",
+                "ms-python.vscode-pylance",
+                "nvidia.nsight-vscode-edition"
+            ]
+        }
+    },
 
-  "customizations": {
-      "vscode": {
-          "extensions": [
-              "ms-python.python",
-              "ms-python.vscode-pylance",
-              "nvidia.nsight-vscode-edition"
-          ]
-      }
-  },
+    "initializeCommand": "mkdir -p ${localWorkspaceFolder}/.docker-cache",
 
-  "postCreateCommand": "pip install -r requirements.txt",
+    "mounts": [
+        "source=${localWorkspaceFolder}/.docker-cache,target=/root/.cache,type=bind"
+    ],
 
-  "remoteEnv": {
-      "NVIDIA_VISIBLE_DEVICES": "all",
-      "CUDA_VISIBLE_DEVICES": "0",
-      "NVIDIA_DRIVER_CAPABILITIES": "compute,utility",
-      "LD_LIBRARY_PATH": "/usr/local/nvidia/lib:/usr/local/nvidia/lib64",
-      "PATH": "/usr/local/nvidia/bin:/usr/local/cuda/bin:${PATH}"
-  }
+    "onCreateCommand": [
+        "dnf install -y python3-pip git wget make gcc gcc-c++ && dnf clean all"
+    ],
+    
+    "postCreateCommand": "pip install -r requirements.txt",
+
+    "remoteEnv": {
+        "NVIDIA_VISIBLE_DEVICES": "all",
+        "CUDA_VISIBLE_DEVICES": "0",
+        "NVIDIA_DRIVER_CAPABILITIES": "compute,utility",
+        "LD_LIBRARY_PATH": "/usr/local/nvidia/lib:/usr/local/nvidia/lib64",
+        "PATH": "/usr/local/nvidia/bin:/usr/local/cuda/bin:${PATH}"
+    }
 }
